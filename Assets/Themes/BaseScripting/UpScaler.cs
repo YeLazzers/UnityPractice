@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class Scale : MonoBehaviour
+public class UpScaler : MonoBehaviour
 {
     [SerializeField] private float _scaleSpeed = 0f;
+
     void Update()
     {
         float scaleChange = _scaleSpeed * Time.deltaTime;
