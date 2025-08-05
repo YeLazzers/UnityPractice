@@ -1,29 +1,39 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseCounter : MonoBehaviour
 {
-    WaitForSeconds yieldDelay = new WaitForSeconds(0.5f);
+    private WaitForSeconds _delay = new WaitForSeconds(0.5f);
+    private Coroutine coroutine;
+    private int _count = 0;
+    private bool _isRunning = false;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        StartCoroutine(Counter());
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (_isRunning)
+            {
+
+                StopCoroutine(coroutine);
+                _isRunning = false;
+            }
+            else
+            {
+                coroutine = StartCoroutine(CountCoroutine());
+                _isRunning = true;
+            }
+            Debug.Log("MouseClick. Running: " + _isRunning);
+        }
     }
-    private IEnumerator Counter()
-    {
-        int count = 0;
-        Debug.Log("Current: " + count);
 
+    private IEnumerator CountCoroutine()
+    {
         while (true)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                count += 1;
-                Debug.Log("Current: " + count);
-            }
-            yield return yieldDelay;
+            yield return _delay;
+            _count += 1;
+            Debug.Log("Current: " + _count);
         }
     }
 }
